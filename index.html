@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zhaff Scarf — Elegance Begins Here</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Leaflet Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ================================================== -->
+  <!-- NAVBAR                                             -->
+  <!-- ================================================== -->
+  <header id="navbar" class="fixed top-0 inset-x-0 z-50">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#beranda" class="flex items-center gap-2.5">
+        <img src="assets/logo.png" alt="Logo Zhaff Scarf" class="w-9 h-9 rounded-full object-cover border border-[#E8C9BE]" />
+        <span class="brand-serif text-xl font-bold text-[#4A251B]">Zhaff Scarf</span>
+      </a>
+
+      <div class="nav-links flex items-center gap-8 text-[#4A251B]">
+        <a href="#beranda">Beranda</a>
+        <a href="#produk">Produk</a>
+        <a href="#tentang">Tentang</a>
+        <a href="#kontak">Kontak</a>
+      </div>
+
+      <div class="flex items-center gap-1 text-[#4A251B]">
+        <button id="searchBtn" class="icon-btn p-2" aria-label="Cari">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
+        </button>
+        <button id="navCartBtn" class="icon-btn p-2 cart-btn-wrap" aria-label="Keranjang">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          <span id="cartBadge" class="cart-badge hidden">0</span>
+        </button>
+        <button id="navOrderBtn" class="icon-btn p-2" aria-label="Pesanan Saya">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+        </button>
+        <button id="authTrigger" class="icon-btn p-2" aria-label="Akun">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        </button>
+        <button id="hamburgerBtn" class="icon-btn p-2 md:hidden" aria-label="Menu">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Search Bar -->
+    <div id="searchBar" class="search-bar">
+      <div class="max-w-6xl mx-auto px-6 py-4">
+        <div class="flex items-center gap-3">
+          <input id="searchInput" type="text" placeholder="Cari hijab favoritmu..."
+            class="flex-1 px-4 py-2.5 rounded-full bg-[#FDF1EE] text-[13px] text-[#4A251B] outline-none border border-[#F0DCD4] focus:border-[#9E6B55]" />
+          <button id="closeSearchBar" class="icon-btn text-[#9E6B55] text-2xl leading-none px-2">&times;</button>
+        </div>
+        <div id="searchResults" class="hidden mt-3 max-h-60 overflow-y-auto"></div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu md:hidden">
+      <a href="#beranda">Beranda</a>
+      <a href="#produk">Produk</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#kontak">Kontak</a>
+    </div>
+  </header>
+
+  <!-- ================================================== -->
+  <!-- HERO                                               -->
+  <!-- ================================================== -->
+  <section id="beranda" class="hero-section">
+    <img src="assets/bg.png" alt="Model Zhaff Scarf" class="hero-img" />
+    <div class="hero-shade"></div>
+
+    <div class="relative z-10 w-full max-w-6xl mx-auto px-6 pt-32 pb-20">
+      <span class="fade-up inline-block text-[10px] tracking-[0.25em] font-semibold text-[#9E6B55] border border-[#9E6B55]/50 rounded-full px-5 py-1.5 mb-6">KOLEKSI TERBARU</span>
+
+      <h1 class="fade-up leading-tight">
+        <span class="brand-serif italic block text-4xl md:text-[52px] font-semibold text-[#BA7D63]">Elegance Begins Here</span>
+        <span class="brand-serif block text-3xl md:text-[40px] font-bold text-[#4A251B] mt-1">Cantik dalam Setiap Detail</span>
+      </h1>
+
+      <p class="fade-up text-[13px] text-[#7A5147] leading-relaxed max-w-md mt-5">
+        Temukan gaya hijab terbaikmu dengan koleksi eksklusif dari Zhaff Scarf.
+        Setiap detail dirancang untuk memberikan kenyamanan dan keanggunan
+        dalam setiap langkahmu.
+      </p>
+
+      <div class="fade-up flex flex-wrap gap-3 mt-8">
+        <a href="#produk" class="btn-dark">LIHAT KOLEKSI &rarr;</a>
+        <a href="#kontak" class="btn-ghost-dark">CONTACT</a>
+      </div>
+
+      <div class="fade-up flex gap-10 mt-12">
+        <div>
+          <p class="brand-serif text-3xl font-bold text-[#4A251B]"><span class="counter" data-target="5" data-suffix="K+">0</span></p>
+          <p class="text-[10px] text-[#9E6B55] mt-1 tracking-wide">Pelanggan Setia</p>
+        </div>
+        <div>
+          <p class="brand-serif text-3xl font-bold text-[#4A251B]"><span class="counter" data-target="20" data-suffix="+">0</span></p>
+          <p class="text-[10px] text-[#9E6B55] mt-1 tracking-wide">Koleksi Produk</p>
+        </div>
+        <div>
+          <p class="brand-serif text-3xl font-bold text-[#4A251B]"><span class="counter" data-target="4.9">0</span></p>
+          <p class="text-[10px] text-[#9E6B55] mt-1 tracking-wide">Rating</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== -->
+  <!-- MARQUEE                                            -->
+  <!-- ================================================== -->
+  <div class="marquee-container">
+    <div class="marquee-content">
+      <span class="mx-8 text-[11px]">✦ Be you, unafraid</span>
+      <span class="mx-8 text-[11px]">✦ Sentuhan lembut di setiap helai</span>
+      <span class="mx-8 text-[11px]">✦ Kualitas yang tak lekang oleh waktu</span>
+      <span class="mx-8 text-[11px]">✦ Nyaman untuk segala momen</span>
+      <span class="mx-8 text-[11px]">✦ Be you, unafraid</span>
+      <span class="mx-8 text-[11px]">✦ Sentuhan lembut di setiap helai</span>
+      <span class="mx-8 text-[11px]">✦ Kualitas yang tak lekang oleh waktu</span>
+      <span class="mx-8 text-[11px]">✦ Nyaman untuk segala momen</span>
+    </div>
+  </div>
+
+  <!-- ================================================== -->
+  <!-- KATEGORI                                           -->
+  <!-- ================================================== -->
+  <section id="kategori" class="stripes-pink py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <p class="text-center text-[11px] tracking-[0.35em] uppercase text-[#FDF1EE]/80 font-semibold">Kategori</p>
+      <h2 class="text-center brand-serif text-3xl md:text-[40px] font-bold text-[#FDF1EE] mt-2">Temukan Gayamu!</h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mt-10">
+        <div class="category-card relative rounded-2xl overflow-hidden shadow-md" data-filter="pashmina">
+          <img src="assets/p2.jpg" alt="Pashmina" class="w-full h-60 object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent"></div>
+          <h3 class="absolute bottom-4 left-4 text-white text-base font-semibold">Pashmina</h3>
+        </div>
+        <div class="category-card relative rounded-2xl overflow-hidden shadow-md" data-filter="square">
+          <img src="assets/s1.jpg" alt="Square" class="w-full h-60 object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent"></div>
+          <h3 class="absolute bottom-4 left-4 text-white text-base font-semibold">Square</h3>
+        </div>
+        <div class="category-card relative rounded-2xl overflow-hidden shadow-md" data-filter="bergo">
+          <img src="assets/b2.jpg" alt="Bergo" class="w-full h-60 object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent"></div>
+          <h3 class="absolute bottom-4 left-4 text-white text-base font-semibold">Bergo</h3>
+        </div>
+        <div class="category-card relative rounded-2xl overflow-hidden shadow-md" data-filter="inner">
+          <img src="assets/i1.jpg" alt="Inner" class="w-full h-60 object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent"></div>
+          <h3 class="absolute bottom-4 left-4 text-white text-base font-semibold">Inner</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== -->
+  <!-- PRODUK — 20 PRODUK                                 -->
+  <!-- ================================================== -->
+  <section id="produk" class="stripes-cream py-20">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+        <div>
+          <p class="text-[11px] tracking-[0.35em] uppercase text-[#BA7D63] font-semibold">Koleksi Kami</p>
+          <h2 class="brand-serif text-3xl md:text-[40px] font-bold text-[#9E6B55] mt-2">Produk Unggulan</h2>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button class="filter-btn active" data-filter="pashmina">Pashmina</button>
+          <button class="filter-btn" data-filter="square">Square</button>
+          <button class="filter-btn" data-filter="bergo">Bergo</button>
+          <button class="filter-btn" data-filter="inner">Inner</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
+
+        <!-- ============ PASHMINA (8) ============ -->
+
+        <div class="product-card" data-category="pashmina">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-20%</span>
+            <img src="assets/p1.jpg" alt="Pashmina Voile Zhaff" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Pashmina</p>
+            <h3 class="product-title">Pashmina Voile Zhaff</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 19.000</span>
+              <span class="price-old">Rp 24.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#C9B8D8"></span>
+              <span class="color" style="background:#EFE6DA"></span>
+              <span class="color" style="background:#4A322A"></span>
+              <span class="color" style="background:#9A8F88"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="pashmina">
+          <div class="product-img-wrap">
+            <span class="badge-best">BEST SELLER</span>
+            <span class="badge-disc">-15%</span>
+            <img src="assets/p2.jpg" alt="Pashmina Viscose Zhaff" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Pashmina</p>
+            <h3 class="product-title">Pashmina Viscose Zhaff</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 128.000</span>
+              <span class="price-old">Rp 150.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#C9BFB6"></span>
+              <span class="color" style="background:#E89DA8"></span>
+              <span class="color" style="background:#2E2A28"></span>
+              <span class="color" style="background:#E5C34C"></span>
+              <span class="color" style="background:#F5F0EA"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="pashmina">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-20%</span>
+            <img src="assets/p3.png" alt="Pashmina Viscose Zhaff Gradasi" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Pashmina</p>
+            <h3 class="product-title">Pashmina Viscose Zhaff Gradasi</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 152.000</span>
+              <span class="price-old">Rp 190.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#D96A6A"></span>
+              <span class="color" style="background:#7A9E7E"></span>
+              <span class="color" style="background:#E5C34C"></span>
+              <span class="color" style="background:#A67452"></span>
+              <span class="color" style="background:#6E8FB5"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="pashmina">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-20%</span>
+            <img src="assets/p4.jpg" alt="Pashmina Viscose Motif Bunga" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Pashmina</p>
+            <h3 class="product-title">Pashmina Viscose Motif Bunga</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 170.000</span>
+              <span class="price-old">Rp 212.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#E8A0B4"></span>
+              <span class="color" style="background:#C74A4A"></span>
+              <span class="color" style="background:#E08A4A"></span>
+              <span class="color" style="background:#6E8F5E"></span>
+              <span class="color" style="background:#8E6EA0"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="pashmina">
+          <div class="product-img-wrap">
+            <span class="badge-best">BEST SELLER</span>
+            <span class="badge-disc">-20%</span>
+            <img src="assets/p5.jpg" alt="Pashmina Ceruty Baby Doll" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Pashmina</p>
+            <h3 class="product-title">Pashmina Ceruty Baby Doll</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 57.000</span>
+              <span class="price-old">Rp 71.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#F0A8B8"></span>
+              <span class="color" style="background:#7A2E3A"></span>
+              <span class="color" style="background:#8A5A44"></span>
+              <span class="color" style="background:#262220"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="pashmina">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-17%</span>
+            <img src="assets/p6.jpg" alt="Pashmina Zhaff Shimmer" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Pashmina</p>
+            <h3 class="product-title">Pashmina Zhaff Shimmer</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 124.000</span>
+              <span class="price-old">Rp 149.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#A8C4D8"></span>
+              <span class="color" style="background:#3A3A40"></span>
+              <span class="color" style="background:#C44848"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="pashmina">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-10%</span>
+            <img src="assets/p7.jpg" alt="Pashmina Zhaff Turkey" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Pashmina</p>
+            <h3 class="product-title">Pashmina Zhaff Turkey</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 170.000</span>
+              <span class="price-old">Rp 188.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#4A7A9E"></span>
+              <span class="color" style="background:#26262A"></span>
+              <span class="color" style="background:#C44848"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="pashmina">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-20%</span>
+            <img src="assets/p8.jpg" alt="Pashmina Zhaff Bayan" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Pashmina</p>
+            <h3 class="product-title">Pashmina Zhaff Bayan</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 111.000</span>
+              <span class="price-old">Rp 138.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#E8A8B4"></span>
+              <span class="color" style="background:#B8B0A8"></span>
+              <span class="color" style="background:#F2D4D8"></span>
+              <span class="color" style="background:#EFE6DA"></span>
+              <span class="color" style="background:#E5C34C"></span>
+              <span class="color" style="background:#2B2724"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ SQUARE (4) ============ -->
+
+        <div class="product-card" data-category="square">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-30%</span>
+            <img src="assets/s1.jpg" alt="Zhaff Bella Square" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Square</p>
+            <h3 class="product-title">Zhaff Bella Square</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 49.000</span>
+              <span class="price-old">Rp 70.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#C4544E"></span>
+              <span class="color" style="background:#8A5A44"></span>
+              <span class="color" style="background:#3E2E28"></span>
+              <span class="color" style="background:#262220"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="square">
+          <div class="product-img-wrap">
+            <span class="badge-best">BEST SELLER</span>
+            <span class="badge-disc">-15%</span>
+            <img src="assets/s2.jpg" alt="Zhaff Paris Japan" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Square</p>
+            <h3 class="product-title">Zhaff Paris Japan</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 38.000</span>
+              <span class="price-old">Rp 45.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#262220"></span>
+              <span class="color" style="background:#6E4A38"></span>
+              <span class="color" style="background:#EDE3D5"></span>
+              <span class="color" style="background:#3E2A22"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="square">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-20%</span>
+            <img src="assets/s3.jpg" alt="Zhaff Square Voal Motif Bunga" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Square</p>
+            <h3 class="product-title">Zhaff Square Voal Motif Bunga</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 49.000</span>
+              <span class="price-old">Rp 61.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#A67452"></span>
+              <span class="color" style="background:#C4443E"></span>
+              <span class="color" style="background:#F0E6D8"></span>
+              <span class="color" style="background:#9E7EA8"></span>
+              <span class="color" style="background:#E8A8B4"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="square">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-30%</span>
+            <img src="assets/s4.jpg" alt="Zhaff Square Gradasi" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Square</p>
+            <h3 class="product-title">Zhaff Square Gradasi</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 49.000</span>
+              <span class="price-old">Rp 70.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#4A7A9E"></span>
+              <span class="color" style="background:#E5C34C"></span>
+              <span class="color" style="background:#E08A4A"></span>
+              <span class="color" style="background:#C4443E"></span>
+              <span class="color" style="background:#7A9E7E"></span>
+              <span class="color" style="background:#9E7EA8"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ BERGO (4) ============ -->
+
+        <div class="product-card" data-category="bergo">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-25%</span>
+            <img src="assets/b1.jpg" alt="Zhaff Bergo Sport" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Bergo</p>
+            <h3 class="product-title">Zhaff Bergo Sport</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 40.000</span>
+              <span class="price-old">Rp 53.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#B0A8A0"></span>
+              <span class="color" style="background:#E8A0A8"></span>
+              <span class="color" style="background:#EFE6DA"></span>
+              <span class="color" style="background:#8A5A44"></span>
+              <span class="color" style="background:#C4443E"></span>
+              <span class="color" style="background:#262220"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="bergo">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-25%</span>
+            <img src="assets/b2.jpg" alt="Zhaff Bergo Medium" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Bergo</p>
+            <h3 class="product-title">Zhaff Bergo Medium</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 51.000</span>
+              <span class="price-old">Rp 68.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#B08A9A"></span>
+              <span class="color" style="background:#EFE6DA"></span>
+              <span class="color" style="background:#8A5A44"></span>
+              <span class="color" style="background:#2B2724"></span>
+              <span class="color" style="background:#9A9088"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="bergo">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-25%</span>
+            <img src="assets/b3.jpg" alt="Zhaff Bergo Instant Non Pet (Medium)" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Bergo</p>
+            <h3 class="product-title">Zhaff Bergo Instant Non Pet (Medium)</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 68.000</span>
+              <span class="price-old">Rp 90.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#8E3A3A"></span>
+              <span class="color" style="background:#E8A0A8"></span>
+              <span class="color" style="background:#4A322A"></span>
+              <span class="color" style="background:#8E6EA0"></span>
+              <span class="color" style="background:#A67452"></span>
+              <span class="color" style="background:#B0A8A0"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="bergo">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-25%</span>
+            <img src="assets/b4.jpg" alt="Zhaff Bergo Sport Instan Non Pet" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Bergo</p>
+            <h3 class="product-title">Zhaff Bergo Sport Instan Non Pet</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 51.000</span>
+              <span class="price-old">Rp 68.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#B0A8A0"></span>
+              <span class="color" style="background:#EFE6DA"></span>
+              <span class="color" style="background:#7A9E7E"></span>
+              <span class="color" style="background:#8A5A44"></span>
+              <span class="color" style="background:#E8A0A8"></span>
+              <span class="color" style="background:#3E2A22"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ INNER (4) ============ -->
+
+        <div class="product-card" data-category="inner">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-20%</span>
+            <img src="assets/i1.jpg" alt="Zhaff Inner Ninja" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Inner</p>
+            <h3 class="product-title">Zhaff Inner Ninja</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 24.000</span>
+              <span class="price-old">Rp 30.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#8A5A44"></span>
+              <span class="color" style="background:#7A2E3A"></span>
+              <span class="color" style="background:#3A4A6E"></span>
+              <span class="color" style="background:#E8A0A8"></span>
+              <span class="color" style="background:#C4443E"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="inner">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-20%</span>
+            <img src="assets/i2.jpg" alt="Zhaff Inner Turkey Tail" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Inner</p>
+            <h3 class="product-title">Zhaff Inner Turkey Tail</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 20.000</span>
+              <span class="price-old">Rp 25.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#E8A0A8"></span>
+              <span class="color" style="background:#EFE6DA"></span>
+              <span class="color" style="background:#2B2724"></span>
+              <span class="color" style="background:#8A5A44"></span>
+              <span class="color" style="background:#4A7A9E"></span>
+              <span class="color" style="background:#C4443E"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="inner">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-20%</span>
+            <img src="assets/i3.jpg" alt="Zhaff Inner Turkey Tail (Bolang Bolong)" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Inner</p>
+            <h3 class="product-title">Zhaff Inner Turkey Tail (Bolang Bolong)</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 20.000</span>
+              <span class="price-old">Rp 25.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#C4443E"></span>
+              <span class="color" style="background:#A67452"></span>
+              <span class="color" style="background:#4A322A"></span>
+              <span class="color" style="background:#E8A0A8"></span>
+              <span class="color" style="background:#B0A8A0"></span>
+              <span class="color" style="background:#4A7A9E"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card" data-category="inner">
+          <div class="product-img-wrap">
+            <span class="badge-disc">-20%</span>
+            <img src="assets/i4.jpg" alt="Zhaff Inner Turkey Bagi" class="product-img" />
+            <div class="img-actions">
+              <button class="btn-beli">Beli Sekarang</button>
+              <button class="quick-cart" aria-label="Tambah ke Keranjang">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-cat">Inner</p>
+            <h3 class="product-title">Zhaff Inner Turkey Bagi</h3>
+            <div class="stars"><div class="stars-bg">★★★★★</div><div class="stars-fg">★★★★★</div></div>
+            <div class="price-row">
+              <span class="price-now">Rp 20.000</span>
+              <span class="price-old">Rp 25.000</span>
+            </div>
+            <div class="colors">
+              <span class="color" style="background:#8E3A3A"></span>
+              <span class="color" style="background:#B0A8A0"></span>
+              <span class="color" style="background:#E8A0A8"></span>
+              <span class="color" style="background:#EFE6DA"></span>
+              <span class="color" style="background:#8A5A44"></span>
+              <span class="color" style="background:#2B2724"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== -->
+  <!-- PROMO — BEST SELLER                                -->
+  <!-- ================================================== -->
+  <section id="promo" class="px-4 md:px-10 py-10">
+    <div class="max-w-6xl mx-auto fade-up stripes-dark rounded-[24px] overflow-hidden shadow-xl">
+      <div class="flex flex-col md:flex-row items-stretch">
+
+        <div class="flex-1 p-8 md:p-14 text-white">
+          <span class="inline-block text-[10px] tracking-[0.25em] font-semibold border border-white/50 rounded-full px-5 py-1.5 mb-6">BEST SELLER</span>
+
+          <h2 class="brand-serif text-3xl md:text-[42px] font-bold text-white mb-4">Zhaff Paris Japan</h2>
+
+          <p class="text-[13px] text-white/85 leading-relaxed max-w-md mb-7">
+            Designed for everyday elegance. Tekstur halus, ringan, dan jatuh,
+            memberikan tampilan yang rapi untuk segala momen.
+          </p>
+
+          <div class="flex items-center gap-4 mb-8">
+            <span class="text-2xl md:text-3xl font-bold text-white">Rp 38.000</span>
+            <span class="text-sm text-white/50 line-through">Rp 45.000</span>
+          </div>
+
+          <button id="promoCartBtn" class="btn-cream inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.12em] px-7 py-3 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+            TAMBAH KE KERANJANG
+          </button>
+        </div>
+
+        <div class="md:w-[400px] p-6 md:p-10 flex">
+          <img src="assets/s2.jpg" alt="Zhaff Paris Japan" class="w-full h-64 md:h-full object-cover rounded-[18px] shadow-lg" />
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================== -->
+  <!-- TENTANG KAMI                                       -->
+  <!-- ================================================== -->
+  <section id="tentang" class="stripes-cream py-20">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center">
+
+      <div class="relative fade-up mb-8 md:mb-0">
+        <img src="assets/tentang.png" alt="Toko Zhaff Scarf" class="w-[75%] h-72 md:h-96 object-cover rounded-2xl shadow-lg" />
+        <img src="assets/p3.png" alt="Model Zhaff Scarf" class="absolute -bottom-8 right-2 w-[45%] h-48 md:h-60 object-cover rounded-2xl shadow-xl border-[6px] border-[#FDF1EE]" />
+      </div>
+
+      <div class="fade-up">
+        <p class="text-[11px] tracking-[0.35em] uppercase text-[#BA7D63] font-semibold mb-3">Tentang Kami</p>
+        <h2 class="brand-serif text-3xl md:text-[38px] font-bold text-[#9E6B55] mb-5 leading-tight">Where Elegance Meets Modesty.</h2>
+
+        <p class="text-[12.5px] text-[#7A5147] leading-relaxed mb-4">
+          Zhaff Scarf hadir untuk menghadirkan hijab yang nyaman dan elegan untuk setiap
+          wanita muslimah. Kami percaya bahwa hijab bukan hanya sekadar penutup, tetapi
+          juga cara untuk mengekspresikan diri dengan anggun dan percaya diri.
+        </p>
+        <p class="text-[12.5px] text-[#7A5147] leading-relaxed mb-8">
+          Kami berdedikasi untuk menyediakan bahan terbaik dengan desain yang up to date
+          dan tenang. Zhaff Scarf hadir untuk mendampingi dalam setiap momen berharga Anda.
+        </p>
+
+        <div class="grid grid-cols-3 gap-3 max-w-sm">
+          <div class="stat-box">
+            <span class="counter block font-bold text-xl text-[#9E6B55]" data-target="5" data-suffix="+">0</span>
+            <p class="text-[9px] text-gray-400 mt-1 tracking-wide">Tahun</p>
+          </div>
+          <div class="stat-box">
+            <span class="counter block font-bold text-xl text-[#9E6B55]" data-target="50" data-suffix="+">0</span>
+            <p class="text-[9px] text-gray-400 mt-1 tracking-wide">Koleksi</p>
+          </div>
+          <div class="stat-box">
+            <span class="counter block font-bold text-xl text-[#9E6B55]" data-target="3" data-suffix="+">0</span>
+            <p class="text-[9px] text-gray-400 mt-1 tracking-wide">Cabang</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================================================== -->
+  <!-- KONTAK                                             -->
+  <!-- ================================================== -->
+  <section id="kontak" class="px-4 md:px-10 pb-20">
+    <div class="max-w-3xl mx-auto fade-up stripes-dark rounded-[24px] p-8 md:p-14 shadow-xl">
+
+      <div class="text-center mb-10">
+        <p class="text-[11px] text-white/80 mb-2">Hubungi Kami</p>
+        <h2 class="brand-serif text-3xl md:text-[40px] font-bold text-white mb-3">Ada Pertanyaan?</h2>
+        <p class="text-white/75 text-[12px] md:text-[13px] max-w-md mx-auto">
+          Kami siap membantu Anda dengan informasi produk, pesan, atau menjawab
+          pertanyaan seputar pesanan.
+        </p>
+      </div>
+
+      <form id="contactForm" class="space-y-5">
+        <div class="grid md:grid-cols-2 gap-5">
+          <div>
+            <label class="block text-[11px] font-medium text-white/90 mb-2">Nama</label>
+            <input type="text" name="nama" placeholder="Nama Anda..." class="input" required />
+          </div>
+          <div>
+            <label class="block text-[11px] font-medium text-white/90 mb-2">Email</label>
+            <input type="email" name="email" placeholder="email@contoh.com" class="input" required />
+          </div>
+        </div>
+        <div>
+          <label class="block text-[11px] font-medium text-white/90 mb-2">Pesan</label>
+          <textarea name="pesan" rows="5" placeholder="Tulis pesan anda..." class="input resize-none" required></textarea>
+        </div>
+        <div class="text-center pt-2">
+          <button type="submit" class="btn-cream inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.1em] px-8 py-3 rounded-full">
+            Kirim pesan
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <p class="contact-note">
+        📩 Pesan kamu akan kami balas melalui email dalam 1×24 jam. Mohon ditunggu ya, Kak!
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ================================================== -->
+  <!-- FOOTER                                             -->
+  <!-- ================================================== -->
+  <footer id="footer" class="stripes-footer pt-14 pb-5">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <div class="fade-up flex flex-col md:flex-row justify-between gap-10 md:gap-32">
+
+        <div class="max-w-[300px]">
+          <div class="flex items-center gap-3">
+            <img src="assets/logo.png" alt="Logo Zhaff Scarf"
+              class="w-12 h-12 rounded-full object-cover border border-[#E8C9BE] shadow-sm" />
+            <h3 class="brand-serif text-[22px] font-bold text-[#4A251B]">Zhaff Scarf</h3>
+          </div>
+
+          <p class="text-[11px] text-[#7A5147] leading-relaxed mt-4">
+            Toko yang menyediakan berbagai hijab wanita terlengkap dan terkini.
+          </p>
+
+          <div class="flex gap-2.5 mt-5">
+            <a href="#" aria-label="Instagram" class="social-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="#" aria-label="Facebook" class="social-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg>
+            </a>
+            <a href="#" aria-label="Twitter" class="social-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M23 4.94c-.8.36-1.66.6-2.56.71a4.48 4.48 0 001.96-2.48 8.9 8.9 0 01-2.83 1.08 4.46 4.46 0 00-7.6 4.07A12.65 12.65 0 012.7 3.67a4.46 4.46 0 001.38 5.95c-.73-.02-1.42-.22-2.02-.55v.06a4.46 4.46 0 003.58 4.37c-.66.18-1.35.2-2.01.08a4.47 4.47 0 004.17 3.1A8.95 8.95 0 011 18.57a12.62 12.62 0 006.84 2.01c8.2 0 12.69-6.8 12.69-12.69l-.01-.58A9.06 9.06 0 0023 4.94z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-bold text-[#4A251B] mb-4">Navigasi</h4>
+          <ul class="space-y-2.5">
+            <li><a href="#beranda" class="footer-link">Beranda</a></li>
+            <li><a href="#produk" class="footer-link">Produk</a></li>
+            <li><a href="#tentang" class="footer-link">Tentang</a></li>
+            <li><a href="#kontak" class="footer-link">Kontak</a></li>
+            <li><a href="#" id="footerCartLink" class="footer-link">Keranjang</a></li>
+            <li><a href="#" id="orderBtn" class="footer-link">Pesanan</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="mt-12">
+        <p class="text-[10px] text-[#A5756A] tracking-wide">
+          <span id="year">2025</span> Zhaff Scarf. Seluruh hak cipta dilindungi.
+        </p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ================================================== -->
+  <!-- TOAST                                              -->
+  <!-- ================================================== -->
+  <div id="toastIndex"
+    class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-[#4A251B] text-white text-sm px-6 py-3 rounded-full shadow-xl
+           opacity-0 translate-y-8 transition-all duration-300 z-[400] pointer-events-none whitespace-nowrap">
+    <span id="toastText"></span>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay"></div>
+
+  <!-- ================================================== -->
+  <!-- PANEL KERANJANG                                    -->
+  <!-- ================================================== -->
+  <aside id="cartPanel" class="side-panel">
+    <div class="flex items-center justify-between p-5 border-b border-[#F0DCD4]">
+      <h3 class="font-semibold text-[#4A251B]">Keranjang Belanja</h3>
+      <button id="closeCartPanel" class="icon-btn text-2xl text-gray-400 hover:text-[#9E6B55]">&times;</button>
+    </div>
+
+    <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-5 space-y-3 hidden"></div>
+
+    <div id="cartEmpty" class="flex-1 flex flex-col items-center justify-center text-center p-8">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-14 h-14 text-[#E8C9BE] mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+      <p class="text-sm font-medium text-[#8B5E4C]">Keranjang masih kosong</p>
+      <p class="text-xs text-gray-400 mt-1 mb-5">Yuk, isi dengan hijab favoritmu!</p>
+      <button id="closeCartEmpty" class="btn-primary">Mulai Belanja</button>
+    </div>
+
+    <div id="cartFooter" class="p-5 border-t border-[#F0DCD4] bg-white hidden">
+      <div class="flex items-center justify-between mb-1">
+        <span class="text-[11px] text-gray-400">Subtotal</span>
+        <button id="deleteAllBtn" class="text-[10px] text-red-400 hover:text-red-500 font-medium">Kosongkan</button>
+      </div>
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-sm font-semibold text-[#4A251B]">Total</span>
+        <span id="cartTotal" class="text-lg font-bold text-[#9E6B55]">Rp 0</span>
+      </div>
+      <button id="checkoutBtn" class="btn-primary w-full text-center">Checkout Sekarang</button>
+    </div>
+  </aside>
+
+  <!-- ================================================== -->
+  <!-- PANEL PROFIL                                       -->
+  <!-- ================================================== -->
+  <div id="profileOverlay" class="overlay"></div>
+  <aside id="profilePanel" class="side-panel w-sm">
+    <div class="flex items-center justify-between p-5 border-b border-[#F0DCD4]">
+      <h3 class="font-semibold text-[#4A251B]">Profil Saya</h3>
+      <button id="closeProfilePanel" class="icon-btn text-2xl text-gray-400 hover:text-[#9E6B55]">&times;</button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-6">
+      <div class="flex flex-col items-center text-center">
+        <div class="relative">
+          <img id="profileAvatar" src="https://via.placeholder.com/100/FDF1EE/9E6B55?text=Z" class="w-20 h-20 rounded-full object-cover border-2 border-[#E8C9BE]" alt="Avatar" />
+          <label for="uploadAvatar" class="absolute bottom-0 right-0 w-7 h-7 rounded-full bg-[#9E6B55] text-white flex items-center justify-center cursor-pointer shadow-md hover:bg-[#8A5A45] transition">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+          </label>
+          <input type="file" id="uploadAvatar" accept="image/*" class="hidden" />
+        </div>
+        <h4 id="profileNameDisplay" class="mt-3 font-semibold text-[#4A251B]">Nama Pengguna</h4>
+        <p id="profileEmailDisplay" class="text-xs text-gray-400">email@contoh.com</p>
+      </div>
+
+      <form id="profileForm" class="space-y-3 mt-8">
+        <div>
+          <label class="text-[11px] font-medium text-[#9E6B55]">Nama Lengkap</label>
+          <input id="profileNameInput" type="text" class="mt-1 w-full px-4 py-2.5 rounded-xl bg-[#FDF1EE] border border-[#F0DCD4] text-[13px] text-[#4A251B] outline-none focus:border-[#9E6B55]" />
+        </div>
+        <div>
+          <label class="text-[11px] font-medium text-[#9E6B55]">Email</label>
+          <input id="profileEmailInput" type="email" readonly class="mt-1 w-full px-4 py-2.5 rounded-xl bg-[#F6E4DD] border border-[#F0DCD4] text-[13px] text-gray-400 outline-none cursor-not-allowed" />
+        </div>
+        <div>
+          <label class="text-[11px] font-medium text-[#9E6B55]">No. WhatsApp</label>
+          <input id="profilePhoneInput" type="tel" placeholder="08xxxxxxxxxx" class="mt-1 w-full px-4 py-2.5 rounded-xl bg-[#FDF1EE] border border-[#F0DCD4] text-[13px] text-[#4A251B] outline-none focus:border-[#9E6B55]" />
+        </div>
+        <button type="submit" class="btn-primary w-full text-center">Simpan Perubahan</button>
+      </form>
+
+      <button id="logoutBtn" class="mt-4 w-full py-2.5 rounded-xl border border-red-200 text-red-400 text-[13px] font-medium hover:bg-red-50 transition">Keluar</button>
+    </div>
+  </aside>
+
+  <!-- ================================================== -->
+  <!-- MODAL AUTH                                         -->
+  <!-- ================================================== -->
+  <div id="authOverlay" class="overlay"></div>
+  <div id="authModal" class="auth-modal">
+    <div class="bg-white rounded-3xl p-8 w-full max-w-sm shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button id="closeAuthModal" class="icon-btn absolute top-4 right-4 text-2xl text-gray-300 hover:text-[#9E6B55]">&times;</button>
+
+      <div class="text-center mb-6">
+        <img src="assets/logo.png" class="w-12 h-12 rounded-full mx-auto mb-3" alt="Logo" />
+        <h2 class="brand-serif text-2xl font-bold text-[#4A251B]">Selamat Datang</h2>
+        <p class="text-xs text-gray-400 mt-1">Masuk atau daftar untuk pengalaman lebih baik</p>
+      </div>
+
+      <form id="loginForm" class="space-y-3">
+        <input id="loginEmail" type="email" placeholder="Email" class="w-full px-4 py-2.5 rounded-xl bg-[#FDF1EE] border border-[#F0DCD4] text-[13px] text-[#4A251B] outline-none focus:border-[#9E6B55]" />
+        <input id="loginPassword" type="password" placeholder="Password" class="w-full px-4 py-2.5 rounded-xl bg-[#FDF1EE] border border-[#F0DCD4] text-[13px] text-[#4A251B] outline-none focus:border-[#9E6B55]" />
+        <p id="loginError" class="hidden text-[11px] text-red-500">Email atau password salah.</p>
+        <button type="submit" id="loginSubmit" class="btn-primary w-full text-center">Masuk</button>
+        <p class="text-[11px] text-gray-400 text-center">Belum punya akun? <a href="#" id="showSignup" class="text-[#9E6B55] font-semibold hover:underline">Daftar</a></p>
+      </form>
+
+      <form id="signupForm" class="space-y-3 hidden">
+        <input id="signupName" type="text" placeholder="Nama Lengkap" class="w-full px-4 py-2.5 rounded-xl bg-[#FDF1EE] border border-[#F0DCD4] text-[13px] text-[#4A251B] outline-none focus:border-[#9E6B55]" />
+        <input id="signupEmail" type="email" placeholder="Email" class="w-full px-4 py-2.5 rounded-xl bg-[#FDF1EE] border border-[#F0DCD4] text-[13px] text-[#4A251B] outline-none focus:border-[#9E6B55]" />
+        <input id="signupPassword" type="password" placeholder="Password" class="w-full px-4 py-2.5 rounded-xl bg-[#FDF1EE] border border-[#F0DCD4] text-[13px] text-[#4A251B] outline-none focus:border-[#9E6B55]" />
+        <p id="signupError" class="hidden text-[11px] text-red-500">Email sudah terdaftar. Gunakan email lain.</p>
+        <button type="submit" id="signupSubmit" class="btn-primary w-full text-center">Daftar</button>
+        <p class="text-[11px] text-gray-400 text-center">Sudah punya akun? <a href="#" id="showLogin" class="text-[#9E6B55] font-semibold hover:underline">Masuk</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================================================== -->
+  <!-- MODAL DETAIL PRODUK (FULL SCREEN)                  -->
+  <!-- ================================================== -->
+  <div id="detailModal" class="detail-modal">
+
+    <div class="back-btn-wrapper">
+      <button id="closeDetailModal" class="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Kembali ke Koleksi
+      </button>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-6 md:px-10 pb-20">
+      <div class="grid md:grid-cols-2 gap-10 md:gap-14 items-start">
+
+        <div class="relative">
+          <span id="modalBadge" class="modal-badge hidden"></span>
+          <img id="productImage" src="" alt="Detail Produk" class="w-full h-[300px] md:h-[440px] object-cover rounded-3xl shadow-lg" />
+        </div>
+
+        <div>
+          <p id="modalCategory" class="text-[11px] tracking-[0.25em] uppercase text-[#BA7D63] font-semibold"></p>
+          <h1 id="modalTitle" class="text-3xl md:text-4xl font-bold text-[#4A251B] mt-2"></h1>
+
+          <div class="rating mt-3">
+            ★★★★★ <span class="text-gray-400 text-xs">(128 ulasan)</span>
+          </div>
+
+          <h2 id="price" class="text-2xl md:text-3xl font-bold text-[#9E6B55] mt-4"></h2>
+
+          <p class="text-[13px] text-gray-500 leading-relaxed mt-4">
+            Hijab premium dengan bahan lembut, ringan, dan tidak menerawang.
+            Nyaman dipakai seharian dan mudah dibentuk sesuai gaya yang kamu inginkan.
+          </p>
+
+          <div class="mt-6">
+            <p class="text-xs font-semibold text-[#9E6B55] mb-2">Pilih Warna</p>
+            <div class="flex gap-3">
+              <span class="detail-color active"></span>
+              <span class="detail-color"></span>
+              <span class="detail-color"></span>
+              <span class="detail-color"></span>
+              <span class="detail-color"></span>
+              <span class="detail-color"></span>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <p class="text-xs font-semibold text-[#9E6B55] mb-2">Jumlah</p>
+            <div class="qty-box">
+              <button id="minus">−</button>
+              <span id="qty">1</span>
+              <button id="plus">+</button>
+            </div>
+          </div>
+
+          <div class="action flex gap-3 mt-8">
+            <button id="cartBtn" class="cart-btn flex-1">+ Keranjang</button>
+            <button id="buyBtn" class="buy-btn flex-1">Beli Sekarang</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================================================== -->
+  <!-- HALAMAN PESANAN — FULLSCREEN                       -->
+  <!-- ================================================== -->
+  <div id="orderPanel" class="order-page">
+    <header class="order-header">
+      <button id="orderCloseBtn" class="order-back-btn">←</button>
+      <h1>Pesanan saya</h1>
+    </header>
+
+    <div id="emptyOrder" class="empty-order">
+      <div class="empty-icon">
+        <div class="box-icon"><span></span><span></span><span></span></div>
+      </div>
+      <h2>Belum ada pesanan</h2>
+      <p>Yuk mulai belanja sekarang!</p>
+      <button id="orderShopBtn" class="shop-btn">Belanja Sekarang</button>
+    </div>
+
+    <div id="orderList" class="order-list-panel"></div>
+  </div>
+
+  <!-- ================================================== -->
+  <!-- MODAL DETAIL PESANAN                               -->
+  <!-- ================================================== -->
+  <div id="orderDetailModal" class="order-modal-overlay">
+    <div class="order-detail-modal">
+
+      <div class="order-modal-header">
+        <h2>Detail Pesanan</h2>
+        <button id="orderDetailCloseBtn" class="order-close-btn">&times;</button>
+      </div>
+
+      <div class="modal-order-info">
+        <strong id="orderDetailNumber">—</strong>
+        <span id="orderDetailInfo">—</span>
+      </div>
+
+      <div class="status-section">
+        <h3>Status Pesanan</h3>
+        <div class="o-timeline">
+          <div class="o-timeline-item completed">
+            <div class="o-timeline-icon">✓</div>
+            <div class="o-timeline-content">
+              <strong>Pesanan Dikonfirmasi</strong>
+              <span>Pembayaran diterima</span>
+            </div>
+          </div>
+          <div class="o-timeline-item current">
+            <div class="o-timeline-icon">●</div>
+            <div class="o-timeline-content">
+              <strong>Sedang Dikemas</strong>
+              <span>Pesanan sedang disiapkan</span>
+            </div>
+          </div>
+          <div class="o-timeline-item">
+            <div class="o-timeline-icon"></div>
+            <div class="o-timeline-content">
+              <strong>Dikirim</strong>
+              <span>Menunggu kurir menjemput paket</span>
+            </div>
+          </div>
+          <div class="o-timeline-item">
+            <div class="o-timeline-icon"></div>
+            <div class="o-timeline-content">
+              <strong>Selesai</strong>
+              <span>Pesanan diterima</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="address-section">
+        <h3>Alamat Pengiriman</h3>
+        <div class="address-box">
+          <strong id="orderDetailAddress">—</strong>
+          <p id="orderDetailAddressDetail">—</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================================================== -->
+  <!-- HALAMAN CHECKOUT — FULLSCREEN (3 LANGKAH)          -->
+  <!-- ================================================== -->
+  <div id="checkoutPage" class="checkout-page">
+
+    <header class="checkout-header">
+      <button class="checkout-back-btn" id="checkoutBackBtn">←</button>
+      <h1>Checkout</h1>
+    </header>
+
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step-item active" id="step1Indicator"><div class="step-circle">1</div></div>
+      <div class="step-line"></div>
+      <div class="step-item" id="step2Indicator"><div class="step-circle">2</div></div>
+      <div class="step-line"></div>
+      <div class="step-item" id="step3Indicator"><div class="step-circle">3</div></div>
+    </div>
+
+    <!-- ===== STEP 1 : DATA PENERIMA + PETA ===== -->
+    <section class="checkout-step active-step" id="step1">
+      <div class="form-card">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nama Penerima</label>
+            <input type="text" id="namaPenerima" placeholder="Nama penerima" />
+          </div>
+          <div class="form-group">
+            <label>No. Telpon</label>
+            <input type="text" id="noTelpon" placeholder="08xxxxxxxxxx" />
+          </div>
+        </div>
+        <div class="form-group full-width">
+          <label>Alamat Lengkap</label>
+          <textarea id="alamat" placeholder="Jl. Raya No. 25, RT/RW..."></textarea>
+        </div>
+        <div class="form-row address-detail">
+          <div class="form-group"><label>Kota</label><input type="text" id="kota" placeholder="Kota" /></div>
+          <div class="form-group"><label>Kecamatan</label><input type="text" id="kecamatan" placeholder="Kecamatan" /></div>
+          <div class="form-group"><label>Kode Pos</label><input type="text" id="kodePos" placeholder="45321" /></div>
+        </div>
+      </div>
+
+      <!-- PETA ala Shopee -->
+      <div class="map-card">
+        <div class="map-search-wrap">
+          <svg class="map-search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 10.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"/></svg>
+          <input id="mapSearch" type="text" placeholder="Cari lokasi... (cth: Sumedang Selatan)" autocomplete="off" />
+        </div>
+        <div id="mapSearchResults" class="map-search-results hidden"></div>
+
+        <div class="map-wrap">
+          <div id="mapPick" class="map-canvas"></div>
+          <div class="map-center-pin">
+            <svg width="40" height="50" viewBox="0 0 24 24">
+              <path d="M12 0C7 0 3 4 3 9c0 6.5 9 15 9 15s9-8.5 9-15c0-5-4-9-9-9z" fill="#9E6B55" stroke="#ffffff" stroke-width="1.2"/>
+              <circle cx="12" cy="9" r="3.2" fill="#ffffff"/>
+            </svg>
+          </div>
+          <div class="map-pin-shadow"></div>
+        </div>
+
+        <div class="map-addr-box">
+          <p class="map-addr-label">LOKASI TERPILIH</p>
+          <p class="map-addr-name" id="mapAddrName">Geser peta ke posisi rumahmu, atau cari lokasi di kolom pencarian.</p>
+        </div>
+      </div>
+
+      <div class="step-button-wrapper">
+        <button class="primary-btn" id="continueBtn">Lanjutkan ke pengiriman</button>
+      </div>
+    </section>
+
+    <!-- ===== STEP 2 : PENGIRIMAN & PEMBAYARAN ===== -->
+    <section class="checkout-step" id="step2">
+
+      <div class="checkout-section">
+        <p class="section-title">OPSI PENGIRIMAN</p>
+        <p class="distance-note">Ongkir otomatis menyesuaikan lokasi yang kamu pilih di peta.</p>
+        <div class="shipping-options">
+          <button class="shipping-card selected">
+            <div class="shipping-info">
+              <div class="shipping-icon">▣</div>
+              <div><strong>JNE Reguler</strong><span>Estimasi 2-3 hari</span></div>
+            </div>
+            <div class="shipping-price" id="priceReguler">Rp 10.000</div>
+          </button>
+          <button class="shipping-card">
+            <div class="shipping-info">
+              <div class="shipping-icon">▰</div>
+              <div><strong>JNE Express</strong><span>Estimasi 1 hari</span></div>
+            </div>
+            <div class="shipping-price" id="priceExpress">Rp 20.000</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="checkout-section payment-section">
+        <p class="section-title">METODE PEMBAYARAN</p>
+        <div class="payment-options">
+          <button class="payment-item selected-payment">
+            <div class="payment-left">
+              <span class="payment-icon">▰</span>
+              <div><strong>Transfer BCA</strong><small>Bank BCA</small></div>
+            </div>
+            <span class="arrow">→</span>
+          </button>
+          <button class="payment-item">
+            <div class="payment-left">
+              <span class="payment-icon">▰</span>
+              <div><strong>Transfer BNI</strong><small>Bank BNI</small></div>
+            </div>
+            <span class="arrow">→</span>
+          </button>
+          <button class="payment-item">
+            <div class="payment-left">
+              <span class="payment-icon">◉</span>
+              <div><strong>QRIS</strong><small>Scan untuk pembayaran</small></div>
+            </div>
+            <span class="arrow">→</span>
+          </button>
+          <button class="payment-item">
+            <div class="payment-left">
+              <span class="payment-icon">♟</span>
+              <div><strong>Bayar ditempat (COD)</strong><small>Bayar saat barang tiba</small></div>
+            </div>
+            <span class="arrow">→</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="step-button-wrapper step2-button">
+        <button class="primary-btn" id="payBtn">Bayar sekarang</button>
+      </div>
+    </section>
+
+    <!-- ===== STEP 3 : BERHASIL ===== -->
+    <section class="checkout-step success-step" id="step3">
+      <div class="success-icon">✓</div>
+      <h2>Pesanan berhasil!</h2>
+      <p class="success-text">Terima kasih sudah berbelanja</p>
+      <p class="order-id" id="orderIdText">#ZS-000000</p>
+
+      <div class="summary-card">
+        <div class="summary-row"><span>Total bayar</span><strong id="totalBayar">Rp 0</strong></div>
+        <div class="summary-row"><span>Metode</span><strong id="metodeBayar">-</strong></div>
+        <div class="summary-row"><span>Kurir</span><strong id="kurirPengiriman">-</strong></div>
+        <div class="summary-row"><span>Estimasi Tiba</span><strong id="estimasiTiba">-</strong></div>
+      </div>
+
+      <div class="success-actions">
+        <button class="primary-btn detail-order-btn" id="successOrderDetailBtn">Lihat pesanan</button>
+        <button class="secondary-btn" id="shopAgainBtn">Belanja lagi</button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ================================================== -->
+  <!-- PAYMENT MODAL (BCA / BNI / QRIS)                   -->
+  <!-- ================================================== -->
+  <div class="payment-modal-overlay" id="paymentModal">
+    <div class="payment-modal">
+
+      <div class="payment-modal-header">
+        <h2>Detail pembayaran <span id="paymentModalTitle">| Transfer BCA</span></h2>
+        <button class="payment-close" id="paymentClose">×</button>
+      </div>
+
+      <!-- BCA -->
+      <div class="payment-content" id="bcaPayment">
+        <div class="bank-icon">▮</div>
+        <h3>BCA Virtual Account</h3>
+        <p class="payment-subtitle">Nama rekening: Zhaff Scarf</p>
+        <div class="account-number-box">
+          <span>NO. REKENING</span>
+          <strong>8110 4272 0434 31</strong>
+          <button class="copy-btn" data-copy="81104272043431">Salin Rekening</button>
+        </div>
+        <div class="payment-total">
+          <div><span>Total pembayaran</span><strong class="pay-dynamic-total">Rp 0</strong></div>
+          <div><span>Status</span><strong class="waiting">Menunggu</strong></div>
+        </div>
+        <div class="payment-warning">
+          <strong>⚠ Pastikan nominal transfer sesuai dengan total pembayaran.</strong>
+          <p>Setelah melakukan pembayaran, simpan bukti transfer untuk konfirmasi pesanan.</p>
+        </div>
+        <button class="use-method-btn" data-method="Transfer BCA">Lanjutkan Checkout</button>
+      </div>
+
+      <!-- BNI -->
+      <div class="payment-content" id="bniPayment">
+        <div class="bank-icon">▮</div>
+        <h3>BNI Virtual Account</h3>
+        <p class="payment-subtitle">Nama rekening: Zhaff Scarf</p>
+        <div class="account-number-box">
+          <span>NO. REKENING</span>
+          <strong>801 4277 4000 79</strong>
+          <button class="copy-btn" data-copy="8014277400079">Salin Rekening</button>
+        </div>
+        <div class="payment-total">
+          <div><span>Total pembayaran</span><strong class="pay-dynamic-total">Rp 0</strong></div>
+          <div><span>Status</span><strong class="waiting">Menunggu</strong></div>
+        </div>
+        <div class="payment-warning">
+          <strong>⚠ Pastikan nominal transfer sesuai dengan total pembayaran.</strong>
+          <p>Setelah melakukan pembayaran, simpan bukti transfer untuk konfirmasi pesanan.</p>
+        </div>
+        <button class="use-method-btn" data-method="Transfer BNI">Lanjutkan Checkout</button>
+      </div>
+
+      <!-- QRIS -->
+      <div class="payment-content qris-content" id="qrisPayment">
+        <div class="qris-icon">QR</div>
+        <h3>Scan QR Code</h3>
+        <p class="payment-subtitle">Scan menggunakan aplikasi pembayaran</p>
+        <div class="qr-wrapper"><div id="qrcode" class="qrcode"></div></div>
+        <div class="payment-total">
+          <div><span>Total pembayaran</span><strong class="pay-dynamic-total">Rp 0</strong></div>
+          <div><span>Status</span><strong class="waiting">Menunggu</strong></div>
+        </div>
+        <div class="payment-warning">
+          <strong>⚠ Pastikan nominal pembayaran sesuai.</strong>
+          <p>Setelah pembayaran berhasil, simpan bukti transaksi untuk konfirmasi pesanan.</p>
+        </div>
+        <button class="use-method-btn" data-method="QRIS">Lanjutkan Checkout</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
